@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Valentine's Collection</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #831843;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .card h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+            color: #be185d;
+        }
+
+        .card p {
+            margin: 0;
+            color: #db2777;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            color: #9d174d;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My Valentine Collection ❤️</h1>
+
+    <div class="grid">
+        <a href="bemyvalentine/index.html" class="card">
+            <span class="icon">💝</span>
+            <h2>Be My Valentine</h2>
+            <p>An interactive journey of love with music and memories.</p>
+        </a>
+
+        <a href="valentine-ask/index.html" class="card">
+            <span class="icon">❓</span>
+            <h2>Will You?</h2>
+            <p>The big question awaits your answer!</p>
+        </a>
+
+        <a href="loveproposal/index.html" class="card">
+            <span class="icon">💍</span>
+            <h2>Love Proposal</h2>
+            <p>A special proposal just for you.</p>
+        </a>
+
+        <a href="valentines-celebration/index.html" class="card">
+            <span class="icon">🎉</span>
+            <h2>Celebration</h2>
+            <p>Let's celebrate our love together!</p>
+        </a>
+
+        <a href="valentine-website/index.html" class="card">
+            <span class="icon">💌</span>
+            <h2>Valentine Website</h2>
+            <p>A dedicated website for this special day.</p>
+        </a>
+    </div>
+
+    <footer>
+        <p>Made with love for you 💖</p>
+    </footer>
+</body>
+
+</html>
