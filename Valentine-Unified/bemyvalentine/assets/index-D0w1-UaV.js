@@ -1,12 +1,12 @@
 import { i as e, n as t, r as n, t as r } from "./vendor-animations-CD1NI-Fb.js"; import "./vendor-BvCYSa5M.js"; import { t as i } from "./vendor-react-DUsfwcQF.js"; (function () { let e = document.createElement(`link`).relList; if (e && e.supports && e.supports(`modulepreload`)) return; for (let e of document.querySelectorAll(`link[rel="modulepreload"]`)) n(e); new MutationObserver(e => { for (let t of e) if (t.type === `childList`) for (let e of t.addedNodes) e.tagName === `LINK` && e.rel === `modulepreload` && n(e) }).observe(document, { childList: !0, subtree: !0 }); function t(e) { let t = {}; return e.integrity && (t.integrity = e.integrity), e.referrerPolicy && (t.referrerPolicy = e.referrerPolicy), e.crossOrigin === `use-credentials` ? t.credentials = `include` : e.crossOrigin === `anonymous` ? t.credentials = `omit` : t.credentials = `same-origin`, t } function n(e) { if (e.ep) return; e.ep = !0; let n = t(e); fetch(e.href, n) } })(); var a = i(), o = e(); const s = {
         names: { sender: `Your Valentine`, receiver: `CHEITHANYA` }, theme: { primaryColor: `#ff7ab2`, secondaryColor: `#ff4d8d`, accentColor: `#ffc0cb`, fontFamily: `Arial, sans-serif` }, content: { title: `Will you be my Valentine?`, subtitle: `Choose wisely. (The "No" button is... shy.)`, yesButtonText: `YES ❤️`, noButtonText: `NO 💔`, successMessage: `💖 YAYYYYY!!! 💖`, successSubtitle: `That's the best decision you've ever made ❤️😘`, giftsTitle: `💝 Your Valentine Gifts 💝`, giftsSubtitle: `Click here for the Valentine gifts, Patootie`, songsTitle: `Our Love Sounds Like This!🎵`, photosTitle: `Every Moment with You!📸`, letterTitle: `To the Girl I Love most!❤️`, prosConsTitle: `Why You Should Choose me as Your Valentine ❤️`, prosConsSubtitle: `Nothing!!!!` },
         media: {
-                mainBearGif: `https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.webp`,
+                mainBearGif: `../assets/gf_photos/gf_1.jpeg`,
                 musicBearGif: `https://media.tenor.com/M6q8a8w_v8IAAAAi/music-bear.gif`,
                 comfortBearGif: `https://media.tenor.com/Snx1EebjA2AAAAAi/pat-head.gif`,
                 kissBearGif: `https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif`,
                 photoBearGif: `https://media.tenor.com/8Xkjhq3Gq8AAAAAi/camera-photo.gif`,
-                loveYouBearGif: `https://media.tenor.com/n14a0y8_M0kAAAAi/love-bear.gif`,
+                loveYouBearGif: `../assets/gf_photos/gf_2.jpeg`,
                 childGif: `https://media.tenor.com/15YUsVj5dJAAAAAi/cute-bear.gif`,
                 roseBearGif: `https://media.tenor.com/6a42Q8q9mEAAAAAi/rose-bear.gif`,
                 cookBearGif: `https://media.tenor.com/04J4_7P4w_AAAAAi/cooking-bear.gif`,
@@ -21,12 +21,12 @@ import { i as e, n as t, r as n, t as r } from "./vendor-animations-CD1NI-Fb.js"
                 gift3: `https://placehold.co/200x200?text=Gift+3`
         },
         couplePhotos: [
-                { image: `https://placehold.co/300x400?text=Photo+1`, caption: `Our first special moment together` },
-                { image: `https://placehold.co/300x400?text=Photo+2`, caption: `Cooking memories together` },
-                { image: `https://placehold.co/300x400?text=Photo+3`, caption: `Our favorite music moments` },
-                { image: `https://placehold.co/300x400?text=Photo+4`, caption: `When you made me smile like this` },
-                { image: `https://placehold.co/300x400?text=Photo+5`, caption: `Our heart-to-heart talks` },
-                { image: `https://placehold.co/300x400?text=Photo+6`, caption: `Your comforting presence` }
+                { image: `../assets/gf_photos/gf_3.jpeg`, caption: `Our first special moment together` },
+                { image: `../assets/gf_photos/gf_4.jpeg`, caption: `Cooking memories together` },
+                { image: `../assets/gf_photos/gf_5.jpeg`, caption: `Our favorite music moments` },
+                { image: `../assets/gf_photos/gf_6.jpeg`, caption: `When you made me smile like this` },
+                { image: `../assets/gf_photos/gf_7.jpeg`, caption: `Our heart-to-heart talks` },
+                { image: `../assets/gf_photos/gf_8.jpeg`, caption: `Your comforting presence` }
         ],
         prosCons: [
                 { gif: `https://media.tenor.com/04J4_7P4w_AAAAAi/cooking-bear.gif`, text: `I'll cook your fav food like it's my love language 🍳` },
