@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Valentine?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
+    :root {
+      --primary: #ff7ab2;
+      --secondary: #ff4d8d;
+      --accent: #ffc0cb;
+      --bg: #ffe4e6;
+      --text: #4a4a4a;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Fredoka', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+    }
+
+    .view {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .view.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 12px;
+      transition: transform 0.3s;
+    }
+
+    img:hover {
+      transform: scale(1.02);
+    }
+
+    h1 {
+      color: var(--secondary);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin: 10px;
+      font-family: inherit;
+    }
+
+    button:hover {
+      background-color: var(--secondary);
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 77, 141, 0.3);
+    }
+
+    .btn-green {
+      background-color: #4CAF50;
+    }
+
+    .btn-green:hover {
+      background-color: #45a049;
+    }
+
+    .btn-red {
+      background-color: #FF5252;
+    }
+
+    .btn-red:hover {
+      background-color: #ff1744;
+    }
+
+    /* Gifts Grid */
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .gift-item {
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .gift-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .gift-img-frame {
+      border: 4px solid white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Music Player */
+    .music-player {
+      width: 100%;
+    }
+
+    .album-art {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .playlist {
+      text-align: left;
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .playlist-item {
+      padding: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .playlist-item:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .playlist-item.active {
+      background: rgba(255, 77, 141, 0.1);
+      color: var(--secondary);
+    }
+
+    /* Photos */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .photo-item figure {
+      margin: 0;
+      background: white;
+      padding: 8px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transform: rotate(var(--rot));
+    }
+
+    /* Letter */
+    .envelope-container {
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .letter-content {
+      background: #fff;
+      padding: 30px;
+      font-family: 'Dancing Script', cursive;
+      /* Fallback will be plain */
+      text-align: left;
+      line-height: 1.6;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Popup */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .popup {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      color: #aaa;
+      padding: 0;
+      font-size: 1.5rem;
+    }
+
+    .pros-cons-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Main Container -->
+  <div id="root">
+
+    <!-- HOME VIEW -->
+    <div id="view-home" class="view active">
+      <div class="card">
+        <img src="./assets/cute-bear.gif" class="floating" alt="Cute Bear" style="width: 200px;">
+        <h1>CHEITHANYA, <br>Will you be my Valentine?</h1>
+        <div>
+          <button id="btn-yes" class="btn-green">YES ❤️</button>
+          <button id="btn-no" class="btn-red">NO 💔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div id="view-success" class="view">
+      <div class="card">
+        <h1>💖 YAYYYYY!!! 💖</h1>
+        <p>That's the best decision you've ever made ❤️😘</p>
+        <img src="./assets/love-you-bear.gif" alt="Love Bear" style="width: 250px;">
+        <h2 style="margin-top: 20px; animation: pulse 2s infinite;">I LOVE YOU❤️</h2>
+        <button onclick="switchView('gifts')">See Your Gifts 🎁</button>
+      </div>
+    </div>
+
+    <!-- GIFTS VIEW -->
+    <div id="view-gifts" class="view">
+      <div class="card">
+        <h1>💝 Your Valentine Gifts 💝</h1>
+        <p>Click to open each one, Patootie!</p>
+        <div class="gifts-grid">
+          <div class="gift-item" onclick="switchView('music')">
+            <div class="gift-img-frame">
+              <img src="./assets/gift/gift1.jpg" alt="Gift 1">
+            </div>
+            <h3>Music</h3>
+          </div>
+          <div class="gift-item" onclick="switchView('letter')">
+            <div class="gift-img-frame">
+              <img src="./assets/gift/gift2.jpg" alt="Gift 2">
+            </div>
+            <h3>Letter</h3>
+          </div>
+          <div class="gift-item" onclick="switchView('photos')">
+            <div class="gift-img-frame">
+              <img src="./assets/gift/gift3.jpg" alt="Gift 3">
+            </div>
+            <h3>Memories</h3>
+          </div>
+        </div>
+        <div id="all-gifts-msg" style="display:none; margin-top:20px;">
+          <img src="./assets/love-you-bear.gif" width="100">
+          <p>Yayyyy!! You opened all the gifts! <br> LOVE YOU SO MUCH!❤️</p>
+        </div>
+        <button onclick="switchView('success')" style="margin-top:20px;">Back to Love</button>
+      </div>
+    </div>
+
+    <!-- MUSIC VIEW -->
+    <div id="view-music" class="view">
+      <div class="card">
+        <h1>Our Love Sounds Like This! 🎵</h1>
+        <div class="music-player">
+          <div class="album-art">
+            <img id="music-cover" src="" alt="Album Art">
+          </div>
+          <h2 id="music-title">Song Title</h2>
+          <p id="music-artist">Album Name</p>
+
+          <audio id="audio-player" controls style="width:100%; margin-top:10px;"></audio>
+
+          <div class="controls">
+            <button onclick="prevSong()">⏮️</button>
+            <button onclick="togglePlay()" id="play-btn">▶️</button>
+            <button onclick="nextSong()">⏭️</button>
+          </div>
+
+          <div class="playlist" id="playlist-container">
+            <!-- Playlist items injected via JS -->
+          </div>
+        </div>
+        <button onclick="markGiftOpened('music'); switchView('gifts')">Back to Gifts</button>
+      </div>
+    </div>
+
+    <!-- PHOTOS VIEW -->
+    <div id="view-photos" class="view">
+      <div class="card">
+        <h1>Every Moment with You! 📸</h1>
+        <div class="photo-grid">
+          <!-- Photos injected via JS -->
+        </div>
+        <button onclick="markGiftOpened('photos'); switchView('gifts')">Back to Gifts</button>
+      </div>
+    </div>
+
+    <!-- LETTER VIEW -->
+    <div id="view-letter" class="view">
+      <div class="card">
+        <h1>To the Girl I Love most! ❤️</h1>
+        <div class="envelope-container" onclick="openLetter()">
+          <img src="./assets/red-heart.png" width="50" style="margin-bottom:10px;">
+          <p>(Click to read)</p>
+        </div>
+        <div id="letter-text" class="letter-content" style="display:none;">
+          <h2>My Dearest Patootie,</h2>
+          <p>I fell for you in a way I never expected, and now every day feels brighter just because you're in it.</p>
+          <p>Loving you comes so naturally. It's in your smile, your laugh, and the comfort I feel whenever I'm with
+            you.</p>
+          <p>You are my favorite part of every moment, and the best thing that ever happened to me.</p>
+          <p style="text-align:right; font-weight:bold; margin-top:20px;">Forever yours,<br>Ram</p>
+        </div>
+        <button onclick="markGiftOpened('letter'); switchView('gifts')">Back to Gifts</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POPUP FOR "NO" -->
+  <div id="popup-overlay" class="overlay" onclick="closePopup()">
+    <div class="popup" onclick="event.stopPropagation()">
+      <button class="close-btn" onclick="closePopup()">✕</button>
+      <p>Maybe I should explain the perks of being my Valentine… let me tell you 😉</p>
+      <button onclick="showProsCons()">Okay</button>
+    </div>
+  </div>
+
+  <div id="pros-cons-overlay" class="overlay" onclick="closeProsCons()">
+    <div class="popup" onclick="event.stopPropagation()">
+      <button class="close-btn" onclick="closeProsCons()">✕</button>
+      <h2>Why You Should Choose Me ❤️</h2>
+      <div id="pros-carousel">
+        <img id="pro-gif" src="" width="150">
+        <p id="pro-text" style="font-weight:bold; margin:10px 0;"></p>
+        <div>
+          <button onclick="prevPro()">⬅️</button>
+          <span id="pro-count">1/6</span>
+          <button onclick="nextPro()">➡️</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA ---
+    const songs = [
+      { title: "Oru Maalai", album: "Ghajini", cover: "./assets/album-covers/ghajini.jpg", src: "./assets/songs/Oru-Maalai.mp3" },
+      { title: "Agasatha", album: "Cuckoo", cover: "./assets/album-covers/cuckoo.jpg", src: "./assets/songs/agasatha.mp3" },
+      { title: "Unakagathanae", album: "Katradhu Tamizh", cover: "./assets/album-covers/katradhu-tamizh.jpg", src: "./assets/songs/unakagathanae.mp3" },
+      { title: "Aasa Orave", album: "Lubber Panthu", cover: "./assets/album-covers/aasa_orave.jpg", src: "./assets/songs/Aasa-Orave.mp3" },
+      { title: "Kadhal Kanave", album: "Mundasupatti", cover: "./assets/album-covers/mundasupatti.jpg", src: "./assets/songs/kadhal-kanave.mp3" }
+    ];
+
+    const photos = [
+      { src: "./assets/couple_photo/couple_photo_1.jpg", caption: "Our first special moment" },
+      { src: "./assets/couple_photo/couple_photo_2.jpg", caption: "Cooking memories" },
+      { src: "./assets/couple_photo/couple_photo_3.jpg", caption: "Music moments" },
+      { src: "./assets/couple_photo/couple_photo_4.jpg", caption: "That smile!" },
+      { src: "./assets/couple_photo/couple_photo_5.jpg", caption: "Heart-to-heart" },
+      { src: "./assets/couple_photo/couple_photo_6.jpg", caption: "Comfort" }
+    ];
+
+    const pros = [
+      { gif: "./assets/cook-bear.gif", text: "I'll cook your fav food like it's my love language 🍳" },
+      { gif: "./assets/comfort-bear.gif", text: "Unlimited comfort and care 💖" },
+      { gif: "./assets/cute-bear.gif", text: "I listen… like actually listen 👂" },
+      { gif: "./assets/kiss-bears.gif", text: "Unlimited hugs & kisses (non-negotiable 😏)" },
+      { gif: "./assets/photo-bear.gif", text: "Your personal photographer 📸" },
+      { gif: "./assets/music-bear.gif", text: "Live singing performances… just for you 🎶" }
+    ];
+
+    // --- STATE ---
+    let currentSongIdx = 0;
+    let currentProIdx = 0;
+    let giftsOpened = new Set();
+    let noCount = 0;
+
+    // --- DOM ELEMENTS ---
+    const audioPlayer = document.getElementById('audio-player');
+
+    // --- INIT ---
+    function init() {
+      renderPlaylist();
+      renderPhotos();
+      loadSong(0);
+    }
+
+    // --- NAVIGATION ---
+    function switchView(viewId) {
+      document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+      document.getElementById(`view-${viewId}`).classList.add('active');
+    }
+
+    // --- HOME LOGIC ---
+    const btnNo = document.getElementById('btn-no');
+    const btnYes = document.getElementById('btn-yes');
+
+    btnNo.addEventListener('mouseover', () => {
+      if (noCount === 0) {
+        document.getElementById('popup-overlay').style.display = 'flex';
+        noCount++;
+      } else {
+        moveNoButton();
+        btnNo.innerText = "NO 💔";
+      }
+    });
+
+    btnNo.addEventListener('click', () => {
+      // Fallback for mobile tap
+      if (noCount === 0) {
+        document.getElementById('popup-overlay').style.display = 'flex';
+        noCount++;
+      } else {
+        moveNoButton();
+      }
+    });
+
+    function moveNoButton() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+      btnNo.style.position = 'absolute';
+      btnNo.style.left = `${x}px`;
+      btnNo.style.top = `${y}px`;
+    }
+
+    document.getElementById('btn-yes').addEventListener('click', () => {
+      switchView('success');
+    });
+
+    // --- POPUP LOGIC ---
+    function closePopup() {
+      document.getElementById('popup-overlay').style.display = 'none';
+    }
+
+    function showProsCons() {
+      closePopup();
+      document.getElementById('pros-cons-overlay').style.display = 'flex';
+      loadPro(0);
+    }
+
+    function closeProsCons() {
+      document.getElementById('pros-cons-overlay').style.display = 'none';
+      btnNo.innerText = "YESSS ❤️";
+      btnNo.onclick = () => switchView('success');
+      btnNo.style.position = 'static'; // Reset position
+    }
+
+    function loadPro(idx) {
+      currentProIdx = idx;
+      document.getElementById('pro-gif').src = pros[idx].gif;
+      document.getElementById('pro-text').innerText = pros[idx].text;
+      document.getElementById('pro-count').innerText = `${idx + 1}/${pros.length}`;
+    }
+
+    function nextPro() {
+      loadPro((currentProIdx + 1) % pros.length);
+    }
+
+    function prevPro() {
+      loadPro((currentProIdx - 1 + pros.length) % pros.length);
+    }
+
+    // --- GIFTS LOGIC ---
+    function markGiftOpened(gift) {
+      giftsOpened.add(gift);
+      if (giftsOpened.size === 3) {
+        document.getElementById('all-gifts-msg').style.display = 'block';
+      }
+    }
+
+    function openLetter() {
+      document.getElementById('letter-text').style.display = 'block';
+      document.querySelector('.envelope-container').style.display = 'none';
+    }
+
+    // --- MUSIC LOGIC ---
+    function renderPlaylist() {
+      const list = document.getElementById('playlist-container');
+      list.innerHTML = '';
+      songs.forEach((song, idx) => {
+        const item = document.createElement('div');
+        item.className = `playlist-item ${idx === currentSongIdx ? 'active' : ''}`;
+        item.innerHTML = `<span>${song.title}</span> <span>${song.album}</span>`;
+        item.onclick = () => loadSong(idx);
+        list.appendChild(item);
+      });
+    }
+
+    function loadSong(idx) {
+      currentSongIdx = idx;
+      const song = songs[idx];
+      document.getElementById('music-title').innerText = song.title;
+      document.getElementById('music-artist').innerText = song.album;
+      document.getElementById('music-cover').src = song.cover;
+      audioPlayer.src = song.src;
+      renderPlaylist(); // Update active state
+
+      // Auto play if not first load? Maybe not to avoid autoplay policy
+      // audioPlayer.play(); 
+    }
+
+    function togglePlay() {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        document.getElementById('play-btn').innerText = "⏸️";
+      } else {
+        audioPlayer.pause();
+        document.getElementById('play-btn').innerText = "▶️";
+      }
+    }
+
+    function nextSong() {
+      loadSong((currentSongIdx + 1) % songs.length);
+      audioPlayer.play();
+      document.getElementById('play-btn').innerText = "⏸️";
+    }
+
+    function prevSong() {
+      loadSong((currentSongIdx - 1 + songs.length) % songs.length);
+      audioPlayer.play();
+      document.getElementById('play-btn').innerText = "⏸️";
+    }
+
+    // --- PHOTOS LOGIC ---
+    function renderPhotos() {
+      const grid = document.querySelector('.photo-grid');
+      grid.innerHTML = '';
+      photos.forEach((photo, idx) => {
+        const item = document.createElement('div');
+        item.className = 'photo-item';
+        const rot = (Math.random() - 0.5) * 10;
+        item.style.setProperty('--rot', `${rot}deg`);
+        item.innerHTML = `
+                    <figure>
+                        <img src="${photo.src}" alt="Memory">
+                        <figcaption style="font-size:0.8rem; margin-top:5px;">${photo.caption}</figcaption>
+                    </figure>
+                `;
+        grid.appendChild(item);
+      });
+    }
+
+    // Run
+    init();
+
+  </script>
+</body>
+
+</html>
